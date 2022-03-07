@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Visma_Library_2022.Models;
 
 namespace Visma_Library_2022.Data
 {
@@ -9,5 +10,6 @@ namespace Visma_Library_2022.Data
             : base(options)
         {
         }
+        public DbSet<Visma_Library_2022.Models.Book> Book { get; set; }
     }
 }
