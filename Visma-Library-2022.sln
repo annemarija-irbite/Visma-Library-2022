@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visma-Library-2022", "Visma-Library-2022\Visma-Library-2022.csproj", "{4439F997-6747-48C4-B03A-9AA3DC396152}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Visma-Library-2022", "Visma-Library-2022\Visma-Library-2022.csproj", "{4439F997-6747-48C4-B03A-9AA3DC396152}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deadline_reminder", "Deadline_reminder\Deadline_reminder.csproj", "{61DBC0E6-E33B-42CF-B795-1E77478ED7D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{4439F997-6747-48C4-B03A-9AA3DC396152}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4439F997-6747-48C4-B03A-9AA3DC396152}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4439F997-6747-48C4-B03A-9AA3DC396152}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61DBC0E6-E33B-42CF-B795-1E77478ED7D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61DBC0E6-E33B-42CF-B795-1E77478ED7D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61DBC0E6-E33B-42CF-B795-1E77478ED7D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61DBC0E6-E33B-42CF-B795-1E77478ED7D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
