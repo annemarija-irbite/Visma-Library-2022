@@ -15,7 +15,7 @@ namespace Visma_Library_2022.Controllers
 
         public IActionResult Index()
         {
-            return View("Books");
+            return View();
         }
 
         public IActionResult Privacy()
