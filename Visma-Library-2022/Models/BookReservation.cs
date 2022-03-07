@@ -15,6 +15,10 @@ namespace Visma_Library_2022.Models
         public string UserId { get; set; }
 
         [ForeignKey("UserId")]
+
+        public string Email { get; set; }
+
+        [ForeignKey("Email")]
         public virtual ApplicationUser ApplicationUser { get; set; }
 
         [ForeignKey("BookId")]
