@@ -12,5 +12,6 @@ namespace Visma_Library_2022.Data
         }
         public DbSet<Visma_Library_2022.Models.Book> Book { get; set; }
         public DbSet<Visma_Library_2022.Models.BookReservation> BookReservation { get; set; }
+        public DbSet<Visma_Library_2022.Models.ProjectRole> ProjectRole { get; set; }
     }
 }
