@@ -14,7 +14,8 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
-                 <input asp-for="Email" class="form-control" />
+                @*<input asp-for="Email" class="form-control" value="@(ViewBag.Email)"/>*@
+                @* <select asp-for="Email" class ="form-control" asp-items="ViewBag.Email"></select>*@
             </div>
             <div class="form-group">
                 <label asp-for="BookId" class="control-label"></label>

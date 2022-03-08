@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -51,7 +52,8 @@ namespace Visma_Library_2022.Controllers
         // GET: Reservations/Create
         public IActionResult Create()
         {
-            ViewData["Email"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
+            //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ViewData["Email"] = User.FindFirstValue(ClaimTypes.NameIdentifier);
             ViewData["BookId"] = new SelectList(_context.Book, "Id", "Id");
             return View();
         }
@@ -69,7 +71,7 @@ namespace Visma_Library_2022.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Email"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", reservation.Email);
+            ViewData["Email"] = User.FindFirstValue(ClaimTypes.NameIdentifier);
             ViewData["BookId"] = new SelectList(_context.Book, "Id", "Id", reservation.BookId);
             return View(reservation);
         }
