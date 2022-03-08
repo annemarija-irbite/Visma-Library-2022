@@ -38,5 +38,7 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a href="@Url.Action("Create", "Reservations")" class="elements">
+          <span>Reserve</span>|
     <a asp-action="Index">Back to List</a>
 </div>

@@ -258,13 +258,13 @@ namespace Visma_Library_2022.Data.Migrations
                     b.ToTable("Book");
                 });
 
-            modelBuilder.Entity("Visma_Library_2022.Models.BookReservation", b =>
+            modelBuilder.Entity("Visma_Library_2022.Models.Reservation", b =>
                 {
-                    b.Property<int>("ReservationId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReservationId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("BookId")
                         .HasColumnType("int");
@@ -276,18 +276,14 @@ namespace Visma_Library_2022.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ReservationId");
+                    b.HasKey("Id");
 
                     b.HasIndex("BookId");
 
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("BookReservation");
+                    b.ToTable("Reservation");
                 });
 
             modelBuilder.Entity("Visma_Library_2022.Models.ApplicationUser", b =>
@@ -348,7 +344,7 @@ namespace Visma_Library_2022.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Visma_Library_2022.Models.BookReservation", b =>
+            modelBuilder.Entity("Visma_Library_2022.Models.Reservation", b =>
                 {
                     b.HasOne("Visma_Library_2022.Models.Book", "Book")
                         .WithMany()
@@ -357,8 +353,8 @@ namespace Visma_Library_2022.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Visma_Library_2022.Models.ApplicationUser", "ApplicationUser")
-                        .WithOne("BookReservation")
-                        .HasForeignKey("Visma_Library_2022.Models.BookReservation", "Email")
+                        .WithOne("Reservation")
+                        .HasForeignKey("Visma_Library_2022.Models.Reservation", "Email")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -369,7 +365,7 @@ namespace Visma_Library_2022.Data.Migrations
 
             modelBuilder.Entity("Visma_Library_2022.Models.ApplicationUser", b =>
                 {
-                    b.Navigation("BookReservation")
+                    b.Navigation("Reservation")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
