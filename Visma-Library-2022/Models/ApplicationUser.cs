@@ -4,6 +4,6 @@ namespace Visma_Library_2022.Models
 {
     public class ApplicationUser: IdentityUser
     {
-        public virtual BookReservation BookReservation { get; set; }
+        public virtual Reservation Reservation { get; set; }
     }
 }
