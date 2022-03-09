@@ -16,3 +16,13 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.card-deck .card {
+    flex-basis: 100%;
+}
+
+@media (min-width: 992px) {
+    .card-deck .card {
+        flex-basis: calc(25% - 30px); /* #{$grid-gutter-width} */
+    }
+}
