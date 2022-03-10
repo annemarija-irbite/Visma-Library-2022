@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Visma_Library_2022.Data;
 
@@ -11,9 +12,10 @@ using Visma_Library_2022.Data;
 namespace Visma_Library_2022.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220309133731_projectRole")]
+    partial class projectRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -259,59 +261,7 @@ namespace Visma_Library_2022.Data.Migrations
                     b.ToTable("Book");
                 });
 
-
-            modelBuilder.Entity("Visma_Library_2022.Models.Comment", b =>
-                {
-                    b.Property<int>("CommentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentId"), 1L, 1);
-
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CommentId");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("BookId");
-
-                    b.ToTable("Comment");
-                });
-
-            modelBuilder.Entity("Visma_Library_2022.Models.ProjectRole", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("RoleName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProjectRole");
-                });
-
-
-
             modelBuilder.Entity("Visma_Library_2022.Models.BorrowedBook", b =>
-
                 {
                     b.Property<int>("BorrowHistoryId")
                         .ValueGeneratedOnAdd()
@@ -416,30 +366,7 @@ namespace Visma_Library_2022.Data.Migrations
                         .IsRequired();
                 });
 
-
-            modelBuilder.Entity("Visma_Library_2022.Models.Comment", b =>
-                {
-                    b.HasOne("Visma_Library_2022.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Visma_Library_2022.Models.Book", "Book")
-                        .WithMany()
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationUser");
-
-                    b.Navigation("Book");
-                });
-
-            
-
             modelBuilder.Entity("Visma_Library_2022.Models.BorrowedBook", b =>
-
                 {
                     b.HasOne("Visma_Library_2022.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()

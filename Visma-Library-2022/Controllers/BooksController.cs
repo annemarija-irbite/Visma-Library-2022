@@ -25,7 +25,7 @@ namespace Visma_Library_2022.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Book.ToListAsync());
-            return View(await _context.Comment.ToListAsync());
+
         }
 
         // GET: Books/Details/5
@@ -57,7 +57,7 @@ namespace Visma_Library_2022.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Author,Category,Status")] Book book)
+        public async Task<IActionResult> Create([Bind("Id,Title,Author,Category,Image")] Book book)
         {
             if (ModelState.IsValid)
             {
@@ -89,7 +89,7 @@ namespace Visma_Library_2022.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Author,Category,Status")] Book book)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Author,Category,Image")] Book book)
         {
             if (id != book.Id)
             {

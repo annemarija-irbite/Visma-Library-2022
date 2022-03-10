@@ -30,17 +30,25 @@
             @Html.DisplayFor(model => model.Category)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Available)
+            @Html.DisplayNameFor(model => model.Image)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Available)
+            @Html.DisplayFor(model => model.Image)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-area="" asp-controller="Reservations" asp-action="Index">Book Reservation</a>
+<<<<<<< Updated upstream
+
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a href="@Url.Action("Create", "Reservations")" class="elements">
-          <span>Reserve</span>|
+    <a href="@Url.Action("Create", "BorrowedBooks", new { bookId = Model?.Id })" class="elements">
+          <span>Reserve</span></a> |
+=======
+    
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a href="@Url.Action("Create", "Reservations")" class="elements">Reserve</a> |
+    <a href="@Url.Action("Index", "Comments")" class="elements">Comments</a> |
+>>>>>>> Stashed changes
     <a asp-action="Index">Back to List</a>
 </div>
+

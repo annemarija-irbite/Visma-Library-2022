@@ -48,7 +48,7 @@ namespace Visma_Library_2022.Data.Migrations
                 name: "IX_Reservation_Email",
                 table: "Reservation",
                 column: "Email",
-                unique: true);
+                unique: false);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
