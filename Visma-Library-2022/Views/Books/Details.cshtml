@@ -37,9 +37,17 @@
     </dl>
 </div>
 <div>
+<<<<<<< Updated upstream
 
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a href="@Url.Action("Create", "BorrowedBooks", new { bookId = Model?.Id })" class="elements">
           <span>Reserve</span></a> |
+=======
+    
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a href="@Url.Action("Create", "Reservations")" class="elements">Reserve</a> |
+    <a href="@Url.Action("Index", "Comments")" class="elements">Comments</a> |
+>>>>>>> Stashed changes
     <a asp-action="Index">Back to List</a>
 </div>
+
