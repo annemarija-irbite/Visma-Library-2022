@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,23 +11,23 @@ using Visma_Library_2022.Models;
 
 namespace Visma_Library_2022.Controllers
 {
-    public class BooksController : Controller
+    public class CommentsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        
-        public BooksController(ApplicationDbContext context)
+
+        public CommentsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Books
+        // GET: Comments
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Book.ToListAsync());
-            return View(await _context.Comment.ToListAsync());
+            var applicationDbContext = _context.Comment.Include(c => c.ApplicationUser).Include(c => c.Book);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Books/Details/5
+        // GET: Comments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -36,39 +35,45 @@ namespace Visma_Library_2022.Controllers
                 return NotFound();
             }
 
-            var book = await _context.Book
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (book == null)
+            var comment = await _context.Comment
+                .Include(c => c.ApplicationUser)
+                .Include(c => c.Book)
+                .FirstOrDefaultAsync(m => m.CommentId == id);
+            if (comment == null)
             {
                 return NotFound();
             }
 
-            return View(book);
+            return View(comment);
         }
 
-        // GET: Books/Create
+        // GET: Comments/Create
         public IActionResult Create()
         {
+            ViewData["ApplicationUserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
+            ViewData["BookId"] = new SelectList(_context.Book, "Id", "Id");
             return View();
         }
 
-        // POST: Books/Create
+        // POST: Comments/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Author,Category,Status")] Book book)
+        public async Task<IActionResult> Create([Bind("CommentId,BookId,ApplicationUserId,Created,Message")] Comment comment)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(book);
+                _context.Add(comment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(book);
+            ViewData["ApplicationUserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", comment.ApplicationUserId);
+            ViewData["BookId"] = new SelectList(_context.Book, "Id", "Id", comment.BookId);
+            return View(comment);
         }
-        
-        // GET: Books/Edit/5
+
+        // GET: Comments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,22 +81,24 @@ namespace Visma_Library_2022.Controllers
                 return NotFound();
             }
 
-            var book = await _context.Book.FindAsync(id);
-            if (book == null)
+            var comment = await _context.Comment.FindAsync(id);
+            if (comment == null)
             {
                 return NotFound();
             }
-            return View(book);
+            ViewData["ApplicationUserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", comment.ApplicationUserId);
+            ViewData["BookId"] = new SelectList(_context.Book, "Id", "Id", comment.BookId);
+            return View(comment);
         }
 
-        // POST: Books/Edit/5
+        // POST: Comments/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Author,Category,Status")] Book book)
+        public async Task<IActionResult> Edit(int id, [Bind("CommentId,BookId,ApplicationUserId,Created,Message")] Comment comment)
         {
-            if (id != book.Id)
+            if (id != comment.CommentId)
             {
                 return NotFound();
             }
@@ -100,12 +107,12 @@ namespace Visma_Library_2022.Controllers
             {
                 try
                 {
-                    _context.Update(book);
+                    _context.Update(comment);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BookExists(book.Id))
+                    if (!CommentExists(comment.CommentId))
                     {
                         return NotFound();
                     }
@@ -116,10 +123,12 @@ namespace Visma_Library_2022.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(book);
+            ViewData["ApplicationUserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", comment.ApplicationUserId);
+            ViewData["BookId"] = new SelectList(_context.Book, "Id", "Id", comment.BookId);
+            return View(comment);
         }
 
-        // GET: Books/Delete/5
+        // GET: Comments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -127,30 +136,32 @@ namespace Visma_Library_2022.Controllers
                 return NotFound();
             }
 
-            var book = await _context.Book
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (book == null)
+            var comment = await _context.Comment
+                .Include(c => c.ApplicationUser)
+                .Include(c => c.Book)
+                .FirstOrDefaultAsync(m => m.CommentId == id);
+            if (comment == null)
             {
                 return NotFound();
             }
 
-            return View(book);
+            return View(comment);
         }
 
-        // POST: Books/Delete/5
+        // POST: Comments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var book = await _context.Book.FindAsync(id);
-            _context.Book.Remove(book);
+            var comment = await _context.Comment.FindAsync(id);
+            _context.Comment.Remove(comment);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool BookExists(int id)
+        private bool CommentExists(int id)
         {
-            return _context.Book.Any(e => e.Id == id);
+            return _context.Comment.Any(e => e.CommentId == id);
         }
     }
 }
