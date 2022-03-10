@@ -1,25 +1,29 @@
 ﻿@model IEnumerable<Visma_Library_2022.Models.Book>
 
-
 @{
     ViewData["Title"] = "Index";
 }
-
-<h1>Index</h1>
-
+<h1>All books</h1>
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-
+<div class="book">
 @foreach (var item in Model) {
     <div class="card-deck four-col">
-            <div class="card col-sm-3" >
-              <img class="card-img-top" src="@Html.Raw(item.Image)" alt="Card image cap">
+            <div>
+              <img class="card-img-top" src="@Html.Raw(item.Image)" alt="Card image cap" style="height: 370px; max-width: 270px">
               <div class="card-body">
-                <h5 class="card-title">@item.Title</h5>
+                <h5 class="card-title text-wrap">@item.Title</h5>
                 <p class="card-text">@item.Author</p>
                 <a asp-action="Details" asp-route-id="@item.Id"><button type="button" class="btn btn-outline-dark">Details</button></a>
               </div>
             </div>
     </div>
-}
+}</div>
+<style>
+    .book {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+</style>

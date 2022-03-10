@@ -35,6 +35,7 @@ namespace Visma_Library_2022.Controllers
         }
 
         // GET: BorrowedBooks
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var model = await _context.BorrowedBook

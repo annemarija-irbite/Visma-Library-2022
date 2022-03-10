@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+@*<table class="table">
     <thead>
         <tr>
             <th>
@@ -27,9 +27,9 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody>*@
 @foreach (var item in Model) {
-        <tr>
+@*        <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.BookId)
             </td>
@@ -47,7 +47,17 @@
                 <a asp-action="Details" asp-route-id="@item.CommentId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.CommentId">Delete</a>
             </td>
-        </tr>
+        </tr>*@
+
+        <div class="card">
+          <div class="card-header">
+            @item.ApplicationUserId
+          </div>
+          <div class="card-body">
+            <blockquote class="blockquote mb-0">
+              <p class="py-2">@item.Message</p>
+              <footer class="blockquote-footer">Added: @item.Created</footer>
+            </blockquote>
+          </div>
+        </div>
 }
-    </tbody>
-</table>

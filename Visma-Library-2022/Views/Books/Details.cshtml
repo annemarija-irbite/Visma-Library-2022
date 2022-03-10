@@ -5,11 +5,7 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
 <div>
-    <h4>Book</h4>
-    <hr />
 @*    <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Title)
@@ -37,22 +33,17 @@
         </dd>
     </dl>*@
 
-    <div class="card">
-    <div class="card-horizontal">
-        <div class="img-square-wrapper">
-            <img class="" src=" src="@Html.Raw(Model?.Image)"" alt="Card image cap">
-        </div>
-        <div class="card-body">
-            <h4 class="card-title">@Model?.Title</h4>
-            <p class="card-text">@Model?.Author</p>
-            <p class="card-text">@Model?.Category</p>
-        </div>
+    <div class="card flex-row"><img class="card-img-left example-card-img-responsive" src="@Html.Raw(Model?.Image)"/>
+      <div class="card-body">
+        <h4 class="card-title h5 h4-sm">@Model?.Title</h4>
+        <p class="card-text">Author: @Model?.Author</p>
+        <p class="card-text">Category: @Model?.Category</p>
+        <a href="@Url.Action("Create", "BorrowedBooks", new { bookId = Model?.Id })" class="elements btn btn-outline-success">Borrow book</a>
+        <a href="@Url.Action("Create", "Comments", new { bookId = Model?.Id })" class="elements btn btn-outline-dark">Add comment</a>
     </div>
-@*    <div class="card-footer">
-        <small class="text-muted">Last updated 3 mins ago</small>
-    </div>*@
+    </div>
 </div>
-</div>
+
 <div>
     <a href="@Url.Action("Create", "BorrowedBooks", new { bookId = Model?.Id })" class="elements">Reserve</a> |
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
@@ -60,4 +51,4 @@
     <a href="@Url.Action("Create", "Comments", new { bookId = Model?.Id })" class="elements">Add Comment</a> |
     <a asp-action="Index">Back to List</a>
 </div>
-
+  
