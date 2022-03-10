@@ -59,14 +59,15 @@ namespace Visma_Library_2022.Controllers
         }
 
         // GET: BorrowedBooks/Create
-        public IActionResult Create()
+        public IActionResult Create(int? bookId)
         {
             //ViewData["Users"] = User.FindFirstValue(ClaimTypes.NameIdentifier);
             BorrowedBook model = new BorrowedBook();
             model.ApplicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             //model.ApplicationUser = User.;
             //model.Book = ;
-            ViewData["BookId"] = new SelectList(_context.Book, "BookId", "Id");
+            //ViewData["BookId"] = new SelectList(_context.Book, "BookId", "Id");
+            ViewData["BookId"] = bookId;
             return View(model);
         }
 
