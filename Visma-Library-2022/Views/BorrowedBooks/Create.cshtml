@@ -4,27 +4,25 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>BorrowedBook</h4>
+<h1>Borrow a new book</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="BookId" class="control-label"></label>
+               @* <label asp-for="BookId" class="control-label"></label>*@
                @* <select asp-for="BookId" class ="form-control" asp-items="ViewBag.BookId"></select>*@
-               <input asp-for="BookId" value="@ViewBag.BookId"/>
+               <input type="hidden" asp-for="BookId" value="@Model?.BookId"/>
             </div>
             <div class="form-group">
-                <label asp-for="ApplicationUserId" class="control-label"></label>
+               @* <label asp-for="ApplicationUserId" class="control-label"></label>*@
                @* <select asp-for="ApplicationUserID" class ="form-control" asp-items="ViewBag.Users"></select>*@
                <input type="hidden" asp-for="ApplicationUserId" value="@Model?.ApplicationUserId"/>
             </div>
             <div class="form-group">
                 <label asp-for="BorrowDate" class="control-label"></label>
-                <input asp-for="BorrowDate" class="form-control" />
+                <input asp-for="BorrowDate" class="form-control" value="@Model?.BorrowDate"/>
                 <span asp-validation-for="BorrowDate" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -32,7 +30,7 @@
                 <input asp-for="ReturnDate" class="form-control" />
                 <span asp-validation-for="ReturnDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mt-4">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -42,6 +40,7 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

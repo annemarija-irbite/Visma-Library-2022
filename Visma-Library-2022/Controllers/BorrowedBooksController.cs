@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -36,8 +37,12 @@ namespace Visma_Library_2022.Controllers
         // GET: BorrowedBooks
         public async Task<IActionResult> Index()
         {
-            //var applicationDbContext = _context.BorrowedBook.Include(b => b.ApplicationUser).Include(b => b.Book);
-            return View(await _context.BorrowedBook.ToListAsync());
+            var model = await _context.BorrowedBook
+                                        .Where(a => a.ApplicationUserId == HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                                        .ToListAsync();
+            return View(model);
+
+            //return View(await _context.BorrowedBook.ToListAsync());
         }
 
         // GET: BorrowedBooks/Details/5
@@ -57,17 +62,15 @@ namespace Visma_Library_2022.Controllers
 
             return View(borrowedBook);
         }
-
+        [Authorize]
         // GET: BorrowedBooks/Create
-        public IActionResult Create(int? bookId)
+        public IActionResult Create(int bookId)
         {
-            //ViewData["Users"] = User.FindFirstValue(ClaimTypes.NameIdentifier);
             BorrowedBook model = new BorrowedBook();
+            
             model.ApplicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //model.ApplicationUser = User.;
-            //model.Book = ;
-            //ViewData["BookId"] = new SelectList(_context.Book, "BookId", "Id");
-            ViewData["BookId"] = bookId;
+            model.BookId = bookId;
+            
             return View(model);
         }
 
@@ -152,10 +155,7 @@ namespace Visma_Library_2022.Controllers
                 return NotFound();
             }
 
-            var borrowedBook = await _context.BorrowedBook
-                .Include(b => b.ApplicationUser)
-                .Include(b => b.Book)
-                .FirstOrDefaultAsync(m => m.BorrowHistoryId == id);
+            var borrowedBook = await _context.BorrowedBook.FirstOrDefaultAsync(m => m.BorrowHistoryId == id);
             if (borrowedBook == null)
             {
                 return NotFound();
@@ -172,6 +172,7 @@ namespace Visma_Library_2022.Controllers
             var borrowedBook = await _context.BorrowedBook.FindAsync(id);
             _context.BorrowedBook.Remove(borrowedBook);
             await _context.SaveChangesAsync();
+            
             return RedirectToAction(nameof(Index));
         }
 

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -21,10 +22,14 @@ namespace Visma_Library_2022.Controllers
         }
 
         // GET: Comments
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int bookId)
         {
-            var applicationDbContext = _context.Comment.Include(c => c.ApplicationUser).Include(c => c.Book);
-            return View(await applicationDbContext.ToListAsync());
+            // var applicationDbContext = _context.Comment.Include(c => c.ApplicationUser).Include(c => c.Book);
+            var model = await _context.Comment
+                                        .Where(a => a.BookId == bookId)
+                                        .ToListAsync();
+
+            return View(model);
         }
 
         // GET: Comments/Details/5
@@ -35,10 +40,8 @@ namespace Visma_Library_2022.Controllers
                 return NotFound();
             }
 
-            var comment = await _context.Comment
-                .Include(c => c.ApplicationUser)
-                .Include(c => c.Book)
-                .FirstOrDefaultAsync(m => m.CommentId == id);
+            var comment = await _context.Comment.FindAsync(id);
+
             if (comment == null)
             {
                 return NotFound();
@@ -48,11 +51,15 @@ namespace Visma_Library_2022.Controllers
         }
 
         // GET: Comments/Create
-        public IActionResult Create()
+        public IActionResult Create(int bookId)
         {
-            ViewData["ApplicationUserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id");
-            ViewData["BookId"] = new SelectList(_context.Book, "Id", "Id");
-            return View();
+            Comment model = new Comment();
+            
+            model.ApplicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            model.BookId = bookId;
+            ViewData["Created"] = DateTime.Now.ToString("M/d/yyyy");
+            
+            return View(model);
         }
 
         // POST: Comments/Create
@@ -62,15 +69,12 @@ namespace Visma_Library_2022.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CommentId,BookId,ApplicationUserId,Created,Message")] Comment comment)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(comment);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["ApplicationUserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", comment.ApplicationUserId);
-            ViewData["BookId"] = new SelectList(_context.Book, "Id", "Id", comment.BookId);
-            return View(comment);
+
+            _context.Add(comment);
+            await _context.SaveChangesAsync();
+            
+            return RedirectToAction(nameof(Index));
+
         }
 
         // GET: Comments/Edit/5
@@ -82,12 +86,12 @@ namespace Visma_Library_2022.Controllers
             }
 
             var comment = await _context.Comment.FindAsync(id);
+            
             if (comment == null)
             {
                 return NotFound();
             }
-            ViewData["ApplicationUserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", comment.ApplicationUserId);
-            ViewData["BookId"] = new SelectList(_context.Book, "Id", "Id", comment.BookId);
+
             return View(comment);
         }
 
@@ -123,8 +127,7 @@ namespace Visma_Library_2022.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ApplicationUserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", comment.ApplicationUserId);
-            ViewData["BookId"] = new SelectList(_context.Book, "Id", "Id", comment.BookId);
+
             return View(comment);
         }
 
@@ -140,6 +143,8 @@ namespace Visma_Library_2022.Controllers
                 .Include(c => c.ApplicationUser)
                 .Include(c => c.Book)
                 .FirstOrDefaultAsync(m => m.CommentId == id);
+
+
             if (comment == null)
             {
                 return NotFound();
