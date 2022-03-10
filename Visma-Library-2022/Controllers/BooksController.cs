@@ -25,10 +25,6 @@ namespace Visma_Library_2022.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Book.ToListAsync());
-<<<<<<< Updated upstream
-=======
-            
->>>>>>> Stashed changes
         }
 
         // GET: Books/Details/5
