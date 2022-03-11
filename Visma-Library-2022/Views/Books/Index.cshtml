@@ -13,9 +13,9 @@
             <div style="height: 536px">
               <img class="card-img-top" src="@Html.Raw(item.Image)" alt="Card image cap" style="height: 370px; max-width: 270px">
               <div class="card-body" style = "height: 134px">
-                <h5 class="card-title text-wrap" style="height: 48px">@item.Title </h5>
+                <h5 class="card-title text-wrap" style="height: 48px">@item.Title</h5>
                 <p class="card-text" style="height: 24px">@item.Author</p>
-                <a asp-action="Details" style="vertical-align:bottom" asp-route-id="@item.Id"><button type="button" class="btn btn-outline-dark">Details</button></a>
+                <a asp-action="Details" style="vertical-align:bottom" class="btn btn-outline-dark" asp-route-id="@item.Id">Details</a>
               </div>
             </div>
     </div>
