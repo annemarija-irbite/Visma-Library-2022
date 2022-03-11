@@ -1,1 +1,0 @@
-InstallUtil.exe C:\Users\jurgis.vilums\dev\VismaLibrary\Visma-Library-2022\Deadline_reminder\bin\Debug\Deadline_reminder.exe
