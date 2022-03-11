@@ -120,7 +120,7 @@ namespace Visma_Library_2022.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    _userManager.AddToRoleAsync(user, "User").Wait();
+                    
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
