@@ -48,7 +48,6 @@
     <a href="@Url.Action("Create", "BorrowedBooks", new { bookId = Model?.Id })" class="elements">Reserve</a> |
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a href="@Url.Action("Index", "Comments", new { bookId = Model?.Id })" class="elements">Comments</a> |
-    <a href="@Url.Action("Create", "Comments", new { bookId = Model?.Id })" class="elements">Add Comment</a> |
     <a asp-action="Index">Back to List</a>
 </div>
   

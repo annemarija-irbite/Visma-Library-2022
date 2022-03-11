@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,7 +23,7 @@ namespace Visma_Library_2022.Controllers
         {
             _context = context;
         }
-
+        [Authorize]
         // GET: Comments
         public async Task<IActionResult> Index(int bookId)
         {
@@ -33,7 +34,7 @@ namespace Visma_Library_2022.Controllers
 
             return View(model);
         }
-
+        [Authorize]
         // GET: Comments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -51,7 +52,7 @@ namespace Visma_Library_2022.Controllers
 
             return View(comment);
         }
-
+        [Authorize]
         // GET: Comments/Create
         public IActionResult Create(int bookId)
         {
@@ -75,10 +76,10 @@ namespace Visma_Library_2022.Controllers
             _context.Add(comment);
             await _context.SaveChangesAsync();
             
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", new { bookId = comment.BookId });
 
         }
-
+        [Authorize]
         // GET: Comments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -132,7 +133,7 @@ namespace Visma_Library_2022.Controllers
 
             return View(comment);
         }
-
+        [Authorize]
         // GET: Comments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

@@ -33,7 +33,7 @@ namespace Visma_Library_2022.Controllers
         {
             _context = context;
         }
-
+        
         // GET: BorrowedBooks
         [Authorize]
         public async Task<IActionResult> Index()
@@ -45,7 +45,8 @@ namespace Visma_Library_2022.Controllers
 
             //return View(await _context.BorrowedBook.ToListAsync());
         }
-
+        
+        [Authorize]
         // GET: BorrowedBooks/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -91,7 +92,7 @@ namespace Visma_Library_2022.Controllers
             //ViewData["BookId"] = new SelectList(_context.Book, "BookId", "BookId", borrowedBook.BookId);
             //return View(borrowedBook);
         }
-
+        [Authorize]
         // GET: BorrowedBooks/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -147,7 +148,7 @@ namespace Visma_Library_2022.Controllers
             //ViewData["BookId"] = new SelectList(_context.Book, "BookId", "BookId", borrowedBook.BookId);
             return View(borrowedBook);
         }
-
+        [Authorize]
         // GET: BorrowedBooks/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
