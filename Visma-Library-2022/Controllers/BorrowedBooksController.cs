@@ -107,7 +107,8 @@ namespace Visma_Library_2022.Controllers
             {
                 return NotFound();
             }
-            //ViewData["ApplicationUserID"] = new SelectList(_context.Set<ApplicationUser>(), "ApplicationUserID ", "Id", borrowedBook.ApplicationUserID);
+            
+            //ViewData["ApplicationUserID"] = new SelectList(_context.Set<ApplicationUser>(), "ApplicationUserId", "Id", borrowedBook.ApplicationUserId);
             //ViewData["BookId"] = new SelectList(_context.Book, "BookId", "BookId", borrowedBook.BookId);
             return View(borrowedBook);
         }
@@ -117,19 +118,18 @@ namespace Visma_Library_2022.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BorrowHistoryId,BookId,ApplicationUserId,BorrowDate,ReturnDate")] BorrowedBook borrowedBook)
+        public async Task<IActionResult> Edit(int id, [Bind("BorrowHistoryId,BookId,ApplicationUserId,BorrowDate,ReturnDate,IsReturned")] BorrowedBook borrowedBook)
         {
             if (id != borrowedBook.BorrowHistoryId)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
                 try
                 {
                     _context.Update(borrowedBook);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -141,11 +141,9 @@ namespace Visma_Library_2022.Controllers
                     {
                         throw;
                     }
-                }
-                return RedirectToAction(nameof(Index));
+
             }
-            //ViewData["ApplicationUserID"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", borrowedBook.ApplicationUserID);
-            //ViewData["BookId"] = new SelectList(_context.Book, "BookId", "BookId", borrowedBook.BookId);
+
             return View(borrowedBook);
         }
         [Authorize]

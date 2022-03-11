@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Visma_Library_2022.Data;
 using Visma_Library_2022.Models;
 
+
 namespace Visma_Library_2022.Controllers
 {
     public class BooksController : Controller
@@ -22,10 +23,22 @@ namespace Visma_Library_2022.Controllers
         }
 
 
-        // GET: Books
+        // GET: Books (b.BorrowedBooks.Contains(h) && h.IsReturned ) || (b.BorrowedBooks.Contains(h)
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Book.ToListAsync());
+            var books = _context.Book.Include(h => h.BorrowedBooks)
+                .Select(b => new BookViewModel
+                {
+                    BookId = b.Id,
+                    Author = b.Author,
+                    Title = b.Title,
+                    Category = b.Category,
+                    Image = b.Image,
+                    IsAvailable = !b.BorrowedBooks.Any(h => b.BorrowedBooks.Contains(h) && !(b.BorrowedBooks.Contains(h) && h.IsReturned))
+
+                }).ToList();
+            return View(books);
+           // return View(await _context.Book.ToListAsync());
 
         }
 
