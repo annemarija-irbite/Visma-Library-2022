@@ -25,5 +25,6 @@ namespace Visma_Library_2022.Models
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Return Date")]
         public DateTime? ReturnDate { get; set; }
+        public bool IsReturned { get; set; }
     }
 }

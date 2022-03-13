@@ -277,6 +277,9 @@ namespace Visma_Library_2022.Data.Migrations
                     b.Property<DateTime>("BorrowDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsReturned")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ReturnDate")
                         .HasColumnType("datetime2");
 
@@ -404,7 +407,7 @@ namespace Visma_Library_2022.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Visma_Library_2022.Models.Book", "Book")
-                        .WithMany()
+                        .WithMany("BorrowedBooks")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -431,6 +434,11 @@ namespace Visma_Library_2022.Data.Migrations
                     b.Navigation("ApplicationUser");
 
                     b.Navigation("Book");
+                });
+
+            modelBuilder.Entity("Visma_Library_2022.Models.Book", b =>
+                {
+                    b.Navigation("BorrowedBooks");
                 });
 #pragma warning restore 612, 618
         }
