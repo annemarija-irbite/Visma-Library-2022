@@ -1,5 +1,5 @@
-﻿@model Visma_Library_2022.Models.Book
-
+﻿
+@model Visma_Library_2022.Models.Book
 
 @{
     ViewData["Title"] = "Details";
@@ -45,9 +45,7 @@
 </div>
 
 <div>
-    <a href="@Url.Action("Create", "BorrowedBooks", new { bookId = Model?.Id })" class="elements">Reserve</a> |
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a href="@Url.Action("Index", "Comments", new { bookId = Model?.Id })" class="elements">Comments</a> |
-    <a asp-action="Index">Back to List</a>
+    <a href="@Url.Action("Index", "Comments", new { bookId = Model?.Id })" class="elements">Comments</a> 
+@*    <a asp-action="Index">Back to List</a>*@
 </div>
-  
